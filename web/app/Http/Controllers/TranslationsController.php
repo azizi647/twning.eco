@@ -24,7 +24,7 @@ class TranslationsController extends Controller
         $locales = $this->loadLocales();
         $groups = Translation::groupBy('group');
 
-        $groups = $groups->lists('group', 'group');
+        $groups = $groups->pluck('group', 'group');
         if ($groups instanceof Collection) {
             $groups = $groups->all();
         }
@@ -60,7 +60,7 @@ class TranslationsController extends Controller
 
     protected function loadLocales()
     {
-        $locales = Translation::groupBy('locale')->lists('locale');
+        $locales = Translation::groupBy('locale')->pluck('locale');
         if ($locales instanceof Collection) {
             $locales = $locales->all();
         }

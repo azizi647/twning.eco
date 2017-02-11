@@ -15,6 +15,11 @@ Route::group(
         'prefix' => LaravelLocalization::setLocale()
     ],function()
     {
+    
+    
+    
+    
+    
 
         Route::group(['prefix' => 'twadm', 'middleware' => 'auth'], function () {
             Route::get('/', 'BackendController@index');
