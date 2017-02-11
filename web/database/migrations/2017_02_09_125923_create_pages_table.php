@@ -24,6 +24,7 @@ class CreatePagesTable extends Migration
             $table->string('keywords');
             $table->string('link');
             $table->integer('order')->default(0);
+            $table->tinyInteger('show_index')->default(0);
             $table->string('file')->nullable();
             $table->boolean('status')->default(0);
             $table->timestamps();

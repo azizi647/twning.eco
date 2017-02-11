@@ -11,8 +11,8 @@
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/{{ LaravelLocalization::setLocale() }}/cms"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="/{{ LaravelLocalization::setLocale() }}/cms/pages"></i> Pages</a></li>
+        <li><a href="/{{ url(LaravelLocalization::setLocale().'/twadm') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/{{ url(LaravelLocalization::setLocale().'/twadm/pages') }}"></i> Pages</a></li>
         <li class="active">Create</li>
       </ol>
     </section>
@@ -30,7 +30,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form class="form-horizontal" action="{{ url(LaravelLocalization::setLocale().'/cms/pages') }}" method="Post" enctype="multipart/form-data">
+            <form class="form-horizontal" action="{{ url(LaravelLocalization::setLocale().'/twadm/pages') }}" method="Post" enctype="multipart/form-data">
               <div class="box-body">
 
                     <div><!-- error olanda  -->
@@ -51,20 +51,34 @@
                       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
                       @endif
                   </div> <!-- end .flash-message -->
-                  
+
 
                   <div class="form-group">
-                      <label for="inputlink" class="col-sm-2 control-label">Link</label>
-                        <div class="col-sm-10">
-                          <input type="text" name="link" class="form-control" id="inputlink"  value="{{ old('link') }}" placeholder="link">
-                        </div>
+                      <label for="menu_id" class="col-sm-2 control-label">Content of ... </label>
+                      <div class="col-sm-10">
+                          <select name="menu_id" id="menu_id" class="form-control">
+                              <option value="0">select menu...</option>
+                              @foreach($menutypes as $menutype)
+                                  <option @if(old('menu_id') == $menutype->menu_id) selected @endif value="{{$menutype->menu_id}}">{{$menutype->title}}</option>
+                              @endforeach
+                          </select>
+                      </div>
                   </div>
               
         
                   <div class="form-group">
-                    <label for="inputordering" class="col-sm-2 control-label">ordering</label>
+                    <label for="inputshow_index" class="col-sm-2 control-label">if news </label>
                     <div class="col-sm-10">
-                      <input type="text"  name="ordering" value="{{ old('ordering') }}" class="form-control" id="inputordering" placeholder="ordering">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" value="0" name="show_index" id="status1" value="option1" checked>
+                                Show Menu
+                            </label>
+                            <label>
+                                <input type="radio" value="1" name="show_index" id="status2" value="option2">
+                                Show Index
+                            </label>
+                        </div>
                     </div>
                   </div>
 
@@ -91,7 +105,6 @@
                <!-- Nav tabs -->
                 <ul class="nav nav-tabs nav-justified" role="tablist">
                   <li role="presentation" class="active"><a href="#az" aria-controls="az" role="tab" data-toggle="tab">az</a></li>
-                  <li role="presentation"><a href="#ru" aria-controls="ru" role="tab" data-toggle="tab">ru</a></li>
                   <li role="presentation"><a href="#en" aria-controls="en" role="tab" data-toggle="tab">en</a></li>
                 </ul>              
                 <br>
@@ -118,43 +131,15 @@
 
                   
                        <div class="form-group">
-                        <label for="InputFile_az" class="col-sm-2 control-label">Body</label>
+                        <label for="InputFile_az" class="col-sm-2 control-label">content</label>
                         <div class="col-sm-10">
-                          <textarea id="editor1" name="editor1"  class="form-control" rows="10" cols="80"></textarea>
+                          <textarea id="description_az" name="description_az"  class="form-control" rows="10" cols="80">{{ old('description_az') }}</textarea>
                         </div>
                       </div>
                       <!-- form commponents end -->
                 
                   </div>
                 <!-- lang az end -->
-
-                <!-- lang ru -->
-                  <div role="tabpanel" class="tab-pane" id="ru">
-                         <!-- form commponents begin -->
-                      <div class="form-group">
-                        <label for="inputtitle_ru" class="col-sm-2 control-label">title</label>
-                        <div class="col-sm-10">
-                          <input type="text" name="title_ru" class="form-control" id="inputtitle_ru"  value="{{ old('title_ru') }}" placeholder="title ru">
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <label for="inputsubtitle_ru" class="col-sm-2 control-label">subtitle</label>
-                        <div class="col-sm-10">
-                          <textarea class="form-control" name="subtitle_ru" rows="3" placeholder="Enter ...">{{ old('subtitle_ru') }}</textarea>
-                        </div>
-                      </div>
-
-                       <div class="form-group">
-                        <label for="InputFile_ru" class="col-sm-2 control-label">Body</label>
-                        <div class="col-sm-10">
-                          <textarea id="editor1" name="editor2"  class="form-control" rows="10" cols="80"></textarea>
-                        </div>
-                      </div>
-                      <!-- form commponents end -->
-   
-                  </div>
-                <!-- lang ru end -->
                 
                 <!-- lang en -->
                   <div role="tabpanel" class="tab-pane" id="en">
@@ -175,15 +160,29 @@
                       </div>
 
                        <div class="form-group">
-                        <label for="InputFile_en" class="col-sm-2 control-label">Body</label>
+                        <label for="InputFile_en" class="col-sm-2 control-label">content</label>
                         <div class="col-sm-10">
-                          <textarea id="editor3" name="editor3"  class="form-control" rows="10" cols="80"></textarea>
+                            <textarea id="description_en" name="description_en"  class="form-control" rows="10" cols="80">{{ old('description_en') }}</textarea>
                         </div>
                       </div>
                       <!-- form commponents end -->
                   </div>
                 <!-- lang en end -->
                 </div>
+              <hr />
+
+              <div class="form-group">
+
+                  <label for="Menu_image" class="col-sm-2 control-label">Page Image</label>
+                  <div class="col-sm-10">
+                      <div class="btn btn-default btn-file">
+                          <i class="fa fa-paperclip"></i> Upload Page Image
+                          <input type="file" name="file" class="form-control" id="Menu_image">
+                      </div>
+                      <p class="help-block">only jpg, png Max. 10MB</p>
+                  </div>
+              </div>
+               <hr />
 
               </div>
               <!-- /.box-body -->
@@ -191,7 +190,7 @@
 
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
           
-                <a href="/cms/pages" class="btn btn-default">Cancel</a>
+                <a href="/twadm/pages" class="btn btn-default">Cancel</a>
                 <button type="submit" class="btn btn-info pull-right">Save</button>
               </div>
               <!-- /.box-footer -->
@@ -215,9 +214,8 @@
   $(function () {
     // Replace the <textarea id="editor1"> with a CKEditor
     // instance, using default configuration.
-    CKEDITOR.replace('editor1');
-    CKEDITOR.replace('editor2');
-    CKEDITOR.replace('editor3');
+    CKEDITOR.replace('description_az');
+    CKEDITOR.replace('description_en');
     
   });
 </script>

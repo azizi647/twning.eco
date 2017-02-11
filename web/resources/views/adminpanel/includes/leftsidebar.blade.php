@@ -7,7 +7,7 @@
     <!--  Sidebar user panel  -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="{{ asset('adminassets/dist/img/logo.jpg') }}" class="img-circle" alt="User Image">
+        <img src="{{ asset('public/adminassets/dist/img/logo.jpg') }}" class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
         <p>TW Admin</p>
@@ -35,20 +35,6 @@
           {{--<li><a href="{{ url('/twadm/roles') }}"><i class="fa fa-circle-o text-red"></i> {{ trans('cms_words.all_roles') }}</a></li>--}}
         {{--</ul>--}}
       {{--</li>--}}
-      <li class="{{ Request::is(LaravelLocalization::setLocale().'/twadm/pages') ? 'active' : '' }} treeview" >
-        <a href="#"><i class="fa fa-file-text-o"></i> <span>{{ trans('cms_words.pages') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
-        <ul class="treeview-menu">
-          <li><a href="{{ url('/twadm/pages/create') }}"><i class="fa fa-circle-o text-green"></i> {{ trans('cms_words.add_pages') }} </a></li>
-          <li><a href="{{ url('/twadm/pages') }}"><i class="fa fa-circle-o text-red"></i> {{ trans('cms_words.all_pages') }}</a></li>
-        </ul>
-      </li>
-      {{--<li class="{{ Request::is(LaravelLocalization::setLocale().'/twadm/menutypes') ? 'active' : '' }} treview" >--}}
-        {{--<a href="#"><i class="fa fa-book"></i> <span>{{ trans('cms_words.menutypes') }}</span> <i class="fa fa-angle-left pull-right"></i></a>--}}
-        {{--<ul class="treeview-menu">--}}
-          {{--<li><a href="{{ url('/twadm/menutypes/create') }}"><i class="fa fa-circle-o text-green"></i> {{ trans('cms_words.add_menutype') }} </a></li>--}}
-          {{--<li><a href="{{ url('/twadm/menutypes') }}"><i class="fa fa-circle-o text-red"></i> {{ trans('cms_words.all_menutypes') }}</a></li>--}}
-        {{--</ul>--}}
-      {{--</li>--}}
       <li class="{{ Request::is(LaravelLocalization::setLocale().'/twadm/menus') ? 'active' : '' }} treview" >
         <a href="#"><i class="fa fa-book"></i> <span>{{ trans('cms_words.menus') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
@@ -56,6 +42,21 @@
           <li><a href="{{ url('/twadm/menus') }}"><i class="fa fa-circle-o text-red"></i> {{ trans('cms_words.all_menus') }}</a></li>
         </ul>
       </li>
+      <li class="{{ Request::is(LaravelLocalization::setLocale().'/twadm/pages') ? 'active' : '' }} treeview" >
+        <a href="#"><i class="fa fa-file-text-o"></i> <span>{{ trans('cms_words.pages') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+          <li><a href="{{ url('/twadm/pages/create') }}"><i class="fa fa-circle-o text-green"></i> {{ trans('cms_words.add_pages') }} </a></li>
+          <li><a href="{{ url('/twadm/pages') }}"><i class="fa fa-circle-o text-red"></i> {{ trans('cms_words.all_pages') }}</a></li>
+        </ul>
+      </li>
+      <li class="{{ Request::is(LaravelLocalization::setLocale().'/twadm/partners') ? 'active' : '' }} treview" >
+        <a href="#"><i class="fa fa-book"></i> <span>{{ trans('cms_words.partners') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+          <li><a href="{{ url('/twadm/partners/create') }}"><i class="fa fa-circle-o text-green"></i> {{ trans('cms_words.add_partner') }} </a></li>
+          <li><a href="{{ url('/twadm/partners') }}"><i class="fa fa-circle-o text-red"></i> {{ trans('cms_words.all_partners') }}</a></li>
+        </ul>
+      </li>
+
       <li class="{{ Request::is(LaravelLocalization::setLocale().'/twadm/translations') ? 'active' : '' }}" >
         <a href="{{ url('/twadm/translations') }}"><i class="fa fa-language"></i> <span>{{ trans('cms_words.translation') }}</span></a>
       </li>

@@ -141,7 +141,7 @@
               <div class="box-footer">
 
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                
+                  <input type="hidden" name="_method" value="PUT">
                 <a href="/twadm/menus" class="btn btn-default">Cancel</a>
                 <button type="submit" class="btn btn-info pull-right">Save</button>
               </div>

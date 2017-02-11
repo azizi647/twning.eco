@@ -5,55 +5,53 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-use App\Pages;
+use App\Page;
+use App\Menu;
 
 use Validator;
 use Redirect;
 
-class CmsPagesController extends Controller {
+class PagesController extends Controller {
 
 	public function index()
 	{
-		$pages = Pages::lang()->get();
+		$pages = Page::lang()->get();
 		return view('adminpanel.pages.list')->with('pages',$pages);
 	}
 
 	public function create()
 	{
-
-		return view('adminpanel.pages.add');
+		$menutypes = Menu::lang()->get();
+		return view('adminpanel.pages.add', ['menutypes'=>$menutypes]);
 	}
 
 	public function store(Request $request)
 	{
 
-		$rules = [            
-            'link'       => 'required',
-            'status'     => 'required',
-            'ordering'   => 'required',
-            // 'title_az'    => 'required',
-			// 'title_ru'    => 'required',
-			// 'title_en'    => 'required',
-			// 'subtitle_az' => 'required',
-			// 'subtitle_ru' => 'required',
-			// 'subtitle_en' => 'required',
-			// 'editor1'     => 'required',
-			// 'editor2'     => 'required',
-			// 'editor3'     => 'required',
+		$rules = [
+				'status'     	 => 'required',
+				'menu_id'     	 => 'required',
+				'title_az'    	 => 'required',
+				'title_en'    	 => 'required',
+				'subtitle_az' 	 => 'required',
+				'subtitle_en' 	 => 'required',
+				'description_az' => 'required',
+				'description_en' => 'required',
+				'file'           => 'required|max:10240|mimes:jpeg,png,jpg'
         ];       
         
 
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return redirect('cms/pages/create')
+            return redirect('twadm/pages/create')
                         ->withErrors($validator)
                         ->withInput();
         }
 
 
        
-        $pageid = Pages::max('page_id');
+        $pageid = Page::max('page_id');
 
 
         if ($pageid == null || $pageid == 0 ) {
@@ -63,53 +61,48 @@ class CmsPagesController extends Controller {
             $pageid++;
         }
 
-        $page_az = new Pages(array(
-			'page_id'    => $pageid,
-			'lang'       => 'az',
-			'title'      => $request->get('title_az'),
-            'link'    	 => $request->get('link'),
-        	'status'     => $request->get('status'),
-        	'ordering'   => $request->get('ordering'),
-			'subtitle'   => $request->get('subtitle_az'),
-			'text'       => $request->get('editor1'),
-        )); 
-
-        $page_ru = new Pages(array(
-			'page_id'    => $pageid,
-			'lang'       => 'ru',
-			'title'      => $request->get('title_ru'),
-            'link'    	 => $request->get('link'),
-        	'status'     => $request->get('status'),
-        	'ordering'   => $request->get('ordering'),
-			'subtitle'   => $request->get('subtitle_ru'),
-			'text'       => $request->get('editor2'),
-        ));
-
-        $page_en = new Pages(array(
-            'page_id'    => $pageid,
-			'lang'       => 'en',
-			'title'      => $request->get('title_en'),
-            'link'    	 => $request->get('link'),
-        	'status'     => $request->get('status'),
-        	'ordering'   => $request->get('ordering'),
-			'subtitle'   => $request->get('subtitle_en'),
-			'text'       => $request->get('editor3'),
-        ));
-
-        
-        $page_az->save();
-        $page_ru->save();
-        $page_en->save();
 
 		$file            = $request->file('file');
-		$destinationPath = 'images/menugallery';
+		$destinationPath = 'public/images/pagegallery';
 //		$extension       = $file->getClientOriginalExtension();
 		$fileName        = trim($file->getClientOriginalName());
 //		dd($fileName);
 		$file->move($destinationPath, $fileName);
 
-        $request->session()->flash('alert-success', 'Cv was successful added!');
-        return Redirect::to('/cms/pages/create');
+        $page_az = new Page(array(
+			'page_id'    => $pageid,
+			'menupage_id'=> $request->get('menu_id'),
+			'lang'       => 'az',
+			'title'      => $request->get('title_az'),
+            'link'    	 => str_slug($request->get('title_az')),
+            'keywords'   => str_slug($request->get('title_az')),
+        	'status'     => $request->get('status'),
+        	'show_index' => $request->get('show_index'),
+			'file'       => $fileName,
+			'subtitle'   => $request->get('subtitle_az'),
+			'text'       => $request->get('description_az'),
+        ));
+
+        $page_en = new Page(array(
+            'page_id'    => $pageid,
+            'menupage_id'=> $request->get('menu_id'),
+			'lang'       => 'en',
+			'title'      => $request->get('title_en'),
+            'link'    	 => str_slug($request->get('title_en')),
+            'keywords'   => str_slug($request->get('title_en')),
+        	'status'     => $request->get('status'),
+        	'show_index' => $request->get('show_index'),
+			'file'       => $fileName,
+			'subtitle'   => $request->get('subtitle_en'),
+			'text'       => $request->get('description_en'),
+        ));
+
+
+        $page_az->save();
+        $page_en->save();
+
+        $request->session()->flash('alert-success', 'Page was successful added!');
+        return Redirect::to('/twadm/pages/create');
 	}
 
 	public function edit($id)
@@ -131,7 +124,7 @@ class CmsPagesController extends Controller {
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return redirect('cms/pages/'.$id.'/edit')
+            return redirect('twadm/pages/'.$id.'/edit')
                         ->withErrors($validator)
                         ->withInput();
         }
@@ -164,7 +157,7 @@ class CmsPagesController extends Controller {
         ]);  
 
         $request->session()->flash('alert-success', 'Cv was successful updated!');
-        return Redirect::to('/cms/pages/'.$id.'/edit');
+        return Redirect::to('/twadm/pages/'.$id.'/edit');
 	}
 
 	public function destroy($id)
@@ -172,7 +165,7 @@ class CmsPagesController extends Controller {
 
 		Pages::where('page_id', $id)->delete();
 
-        return Redirect::to('/cms/pages');
+        return Redirect::to('/twadm/pages');
 	}
 
 }

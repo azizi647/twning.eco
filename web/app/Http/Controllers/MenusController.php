@@ -101,71 +101,38 @@ class MenusController extends Controller {
 
 	public function update(Request $request, $id)
 	{
-		$rules = [            
-            'value'          => 'required',
-            'menutype'       => 'required',
+		$rules = [
             'type'           => 'required',
             'status'         => 'required',
-            'ordering'       => 'required',
+            'order'      	 => 'required',
             'title_az'       => 'required',
-			'title_ru'       => 'required',
 			'title_en'       => 'required',
 			'description_az' => 'required',
-			'description_ru' => 'required',
 			'description_en' => 'required',
-			//'file'           => 'max:10240|mimes:jpeg,png,jpg'
         ];       
         
 
        $validator = Validator::make($request->all(), $rules);
 
        if ($validator->fails()) {
-           return redirect('cms/menus/'.$id.'/edit')
+           return redirect('twadm/menus/'.$id.'/edit')
                        ->withErrors($validator)
                        ->withInput();
        }
-		$fileName = $request->get('file');
-		if($request->file('file')) {
-			File::delete($request->get('filename').$fileName);
-			$file            = $request->file('file');
-			$destinationPath = 'public/images/menugallery';
-//			$extension       = $file_az->getClientOriginalExtension();
-			$fileName        = trim($file->getClientOriginalName());
-			$file->move($destinationPath, $fileName);
-		}else{
-			$fileName = $request->get('filename');
-		}
 
         Menu::where(['menu_id' => $id, 'lang' => 'az'])->update([
 			'title'       => $request->get('title_az'),
             'description' => $request->get('description_az'),
-        	'value'       => $request->get('value'),
-			'menu_type'   => $request->get('menutype'),
 			'type'        => $request->get('type'),
-			'ordering'    => $request->get('ordering'),
-			'file'        => $fileName,
+			'order'       => $request->get('order'),
         	'status'      => $request->get('status'),
         ]); 
-		
-		Menu::where(['menu_id' => $id, 'lang' => 'ru'])->update([
-			'title'       => $request->get('title_ru'),
-            'description' => $request->get('description_ru'),
-        	'value'       => $request->get('value'),
-			'menu_type'   => $request->get('menutype'),
-			'type'        => $request->get('type'),
-			'ordering'    => $request->get('ordering'),
-			'file'        => $fileName,
-        	'status'      => $request->get('status'),
-        ]);
 
         Menu::where(['menu_id' => $id, 'lang' => 'en'])->update([
 			'title'       => $request->get('title_en'),
             'description' => $request->get('description_en'),
-        	'value'       => $request->get('value'),
-			'menu_type'   => $request->get('menutype'),
 			'type'        => $request->get('type'),
-			'ordering'    => $request->get('ordering'),
-			'file'        => $fileName,
+			'order'       => $request->get('order'),
         	'status'      => $request->get('status'),
         ]);
 

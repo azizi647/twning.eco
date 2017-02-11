@@ -2,7 +2,7 @@
 
 @section('body')
 
-<link rel="stylesheet" href="{{ asset("adminassets/plugins/select2/select2.min.css") }}">
+<link rel="stylesheet" href="{{ asset("public/adminassets/plugins/select2/select2.min.css") }}">
 
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->

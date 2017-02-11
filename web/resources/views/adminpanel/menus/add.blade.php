@@ -56,7 +56,7 @@
 
 
                     <div class="form-group">
-                        <label for="inputtype" class="col-sm-2 control-label">position</label>
+                        <label for="inputtype" class="col-sm-2 control-label">site position</label>
                         <div class="col-sm-10">
                           <select name="type" id="inputtype" class="form-control">
                             <option value="">menu position ...</option>
