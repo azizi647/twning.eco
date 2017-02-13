@@ -3,17 +3,22 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Lang;
 
 class Page extends Model
 {
     protected $table = 'pages';
 
-    protected $fillable = ['id','parent','page_id','menupage_id','lang','title','subtitle','text','keywords','link','file','order','status'];
+    protected $fillable = ['parent','page_id','menu_id','lang','title','subtitle','text','keywords','link','file','order','status'];
 
     protected $hidden   = ['updated_at', 'created_at'];
 
     public function scopeLang($query)
     {
-        return $query->where('lang', LaravelLocalization::setLocale());
+<<<<<<< HEAD
+        return $query->where('pages.lang', Lang::getLocale());
+=======
+        return $query->where('lang', Lang::getLocale());
+>>>>>>> origin/master
     }
 }

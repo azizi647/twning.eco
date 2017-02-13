@@ -11,7 +11,7 @@
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/{{ LaravelLocalization::setLocale() }}/cms"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/{{ url(LaravelLocalization::setLocale().'/twadm') }}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Pages</li>
       </ol>
     </section>
@@ -26,7 +26,7 @@
             <div class="box-header">
               <h3 class="box-title">Pages list</h3>
               <div class="pull-right">
-                  <a href="/cms/pages/create"  class="btn btn-info">
+                  <a href="{{ url('/twadm/pages/create')}}"  class="btn btn-info">
                       <i class="fa fa-plus" aria-hidden="true"></i>
                   </a>
               </div>
@@ -37,13 +37,12 @@
                 <thead>
                 <tr>
                   <th>ID</th>
-                  <th>title</th>
-                  <th>subtitle</th>
-                  <!-- <th>keywords</th> -->
-                  <th>link</th>
-                  <th>lang</th>
-                  <th>status</th>
-                  <th>action</th>
+                  <th>Title</th>
+                  <th>Menu id</th>
+                  <th>Link</th>
+                  <th>Lang</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -53,11 +52,10 @@
                 <tr>
                   <td>  {{ $page->page_id }}       </td>
                   <td>  {{ $page->title }}    </td>
-                  <td>  {{ $page->subtitle }}  </td>
-                  <!-- <td>  {{ $page->keywords }} </td> -->
+                  <td>  {{ $page->menu_id }}  </td>
                   <td>  {{ $page->link }}     </td>
                   <td>  {{ $page->lang }}     </td>
-                  <td> 
+                  <td>
                     @if($page->status == 1)
                       <i class="fa fa-check" aria-hidden="true"></i>
                     @else
@@ -66,12 +64,12 @@
                   </td>
                   <td>
                     <div class="col-md-2">
-                      <a  href="{{ url(LaravelLocalization::setLocale().'/cms/pages/').'/'.$page->page_id.'/edit'   }}" class="btn btn-default" >
+                      <a  href="{{ url(LaravelLocalization::setLocale().'/twadm/pages/').'/'.$page->page_id.'/edit'   }}" class="btn btn-default" >
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                       </a>
                     </div>
                     <div class="col-md-1">
-                      <form action="{{ url(LaravelLocalization::setLocale().'/cms/pages'.'/'.$page->page_id) }}" method="post" onsubmit="return confirm('Do you really want to submit the form?');"  >
+                      <form action="{{ url(LaravelLocalization::setLocale().'/twadm/pages'.'/'.$page->page_id) }}" method="post" onsubmit="return confirm('Do you really want to submit the form?');"  >
                       
                         <input type="hidden" name="_method" value="DELETE">
 
@@ -90,13 +88,12 @@
                 <tfoot>
                 <tr>
                   <th>ID</th>
-                  <th>title</th>
-                  <th>subtitle</th>
-                  <!-- <th>keywords</th> -->
-                  <th>link</th>
-                  <th>lang</th>
-                  <th>status</th>
-                  <th>action</th>
+                  <th>Title</th>
+                  <th>Menu</th>
+                  <th>Link</th>
+                  <th>Lang</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
                 </tfoot>
               </table>

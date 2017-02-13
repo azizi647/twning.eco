@@ -41,9 +41,9 @@
            $('.group-select').on('change', function(){
                 var group = $(this).val();
                 if (group) {
-                    window.location.href = '{{ url(LaravelLocalization::setLocale().'/cms/translations/getView') }}/?group='+$(this).val();
+                    window.location.href = '{{ url(LaravelLocalization::setLocale().'/twadm/translations/getView') }}/?group='+$(this).val();
                 } else {
-                    window.location.href = '{{ url(LaravelLocalization::setLocale().'/cms/translations') }}';
+                    window.location.href = '{{ url(LaravelLocalization::setLocale().'/twadm/translations') }}';
                 }
             });
 
@@ -120,7 +120,7 @@
           <p>
           
            @if( !isset($group))
-          <!--   <form class="form-inline form-import" action="{{ url(LaravelLocalization::setLocale().'/cms/translations/getView') }}"  method="POST" data-remote="true" role="form"> 
+          <!--   <form class="form-inline form-import" action="{{ url(LaravelLocalization::setLocale().'/twadm/translations/getView') }}"  method="POST" data-remote="true" role="form">
               <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
               <select name="replace" class="form-control">
                   <option value="0">Append new translations</option>
@@ -131,13 +131,13 @@
 
             @endif
 
-            <form class="form-inline pull-left form-publish" style="margin-right: 20px" method="POST"  action="{{ url(LaravelLocalization::setLocale().'/cms/translations/export') }}" >
+            <form class="form-inline pull-left form-publish" style="margin-right: 20px" method="POST"  action="{{ url(LaravelLocalization::setLocale().'/twadm/translations/export') }}" >
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                 <input type="hidden" name="group" value="{{ isset($group) ? $group : '*'}}">
                 <button type="submit" class="btn btn-info" data-disable-with="Publishing.." >Export translations</button>
             </form> 
 
-            <form class="form-inline form-publish" method="POST"  action="{{ url(LaravelLocalization::setLocale().'/cms/translations/import') }}" >
+            <form class="form-inline form-publish" method="POST"  action="{{ url(LaravelLocalization::setLocale().'/twadm/translations/import') }}" >
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                 <input type="hidden" name="group" value="{{ isset($group) ? $group : '*'}}">
                 <button type="submit" class="btn btn-info" data-disable-with="Publishing.." >Imports translations</button>
@@ -191,7 +191,7 @@
                   <?php endforeach; ?>
                   <?php if($deleteEnabled): ?>
                   <td>
-                      <a href="{{ url(LaravelLocalization::setLocale().'/cms/translations/postDelete')}}" delete-key={{ $key  }} delete-group={{ $group }} class="delete-key" data-confirm="Are you sure you want to delete the translations for '<?= $key ?>?"><span class="glyphicon glyphicon-trash"></span></a>
+                      <a href="{{ url(LaravelLocalization::setLocale().'/twadm/translations/postDelete')}}" delete-key={{ $key  }} delete-group={{ $group }} class="delete-key" data-confirm="Are you sure you want to delete the translations for '<?= $key ?>?"><span class="glyphicon glyphicon-trash"></span></a>
                   </td>
                   <?php endif; ?>
               </tr>

@@ -28,7 +28,7 @@
               <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
                   <div class="pull-right">
-                    <a href="/cms/roles/create"  class="btn btn-info">
+                    <a href="/twadm/roles/create"  class="btn btn-info">
                       <i class="fa fa-plus" aria-hidden="true"></i>
                     </a>
                   </div>
@@ -68,12 +68,12 @@
                   <td>
                    <div class="row" style="margin-right: 0px;margin-left: 0px;">
                     <div class="col-md-3">
-                      <a  href="{{ url(LaravelLocalization::setLocale().'/cms/roles/').'/'.$role->id.'/edit'   }}" class="btn btn-default" >
+                      <a  href="{{ url(LaravelLocalization::setLocale().'/twadm/roles/').'/'.$role->id.'/edit'   }}" class="btn btn-default" >
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                       </a>
                     </div>
                     <div class="col-md-3">
-                      <form action="{{ url(LaravelLocalization::setLocale().'/cms/roles'.'/'.$role->id) }}" method="post" onsubmit="return confirm('Do you really want to submit the form?');"  >
+                      <form action="{{ url(LaravelLocalization::setLocale().'/twadm/roles'.'/'.$role->id) }}" method="post" onsubmit="return confirm('Do you really want to submit the form?');"  >
                       
                         <input type="hidden" name="_method" value="DELETE">
 

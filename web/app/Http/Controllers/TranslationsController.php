@@ -10,10 +10,11 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Application;
 
 use App\Translation;
+use Illuminate\Support\Facades\Lang;
 use Redirect;
 use App;
 use DB;
-
+use Mcamara\LaravelLocalization\LaravelLocalization;
 class TranslationsController extends Controller
 {
 
@@ -46,7 +47,7 @@ class TranslationsController extends Controller
             ->with('group', $group)
             ->with('numTranslations', $numTranslations)
             ->with('numChanged', $numChanged)
-            ->with('editUrl', '/az/cms/translations/postEdit?group='.$group)
+            ->with('editUrl', '/az/twadm/translations/postEdit?group='.$group)
             ->with('deleteEnabled', true);
 
     }
@@ -86,7 +87,7 @@ class TranslationsController extends Controller
                 $group = $info['filename'];
 
 
-                $translations = \Lang::getLoader()->load($locale, $group);
+                $translations = Lang::getLoader()->load($locale, $group);
                 
                 
                 if ($translations && is_array($translations)) {
@@ -118,7 +119,7 @@ class TranslationsController extends Controller
             }
         }
 
-        return Redirect::to('/cms/translations');
+        return Redirect::to('/twadm/translations');
     }
 
 
@@ -139,7 +140,7 @@ class TranslationsController extends Controller
                 $this->export($group);
             }            
 
-            return Redirect::to('/cms/translations');
+            return Redirect::to('/twadm/translations');
     }
     
     public function export($group = null)

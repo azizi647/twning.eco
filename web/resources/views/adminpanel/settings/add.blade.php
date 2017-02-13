@@ -12,7 +12,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="/{{ LaravelLocalization::setLocale() }}/cms"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="/{{ LaravelLocalization::setLocale() }}/cms/settings"></i>Setting</a></li>
+        <li><a href="/{{ LaravelLocalization::setLocale() }}/twadm/settings"></i>Setting</a></li>
         <li class="active">Create</li>
       </ol>
     </section>
@@ -31,7 +31,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form class="form-horizontal" action="{{ url(LaravelLocalization::setLocale().'/cms/settings') }}" method="Post">
+            <form class="form-horizontal" action="{{ url(LaravelLocalization::setLocale().'/twadm/settings') }}" method="Post">
               <div class="box-body">
                     <div><!-- error olanda  -->
                       @if (count($errors) > 0)
@@ -73,7 +73,7 @@
 
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
           
-                <a href="/cms/menus" class="btn btn-default">Cancel</a>
+                <a href="/twadm/menus" class="btn btn-default">Cancel</a>
                 <button type="submit" class="btn btn-info pull-right">save</button>
               </div>
               <!-- /.box-footer -->

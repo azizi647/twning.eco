@@ -11,7 +11,7 @@
 			<small></small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="/{{ LaravelLocalization::setLocale() }}/cms/settings"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li><a href="/{{ LaravelLocalization::setLocale() }}/twadm/settings"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">Settings</li>
 		</ol>
 
@@ -25,7 +25,7 @@
 						<div class="box-header">
 							<h3 class="box-title">All Settings</h3>
 							<div class="pull-right">
-								<a href="/cms/settings/create"  class="btn btn-info">
+								<a href="/twadm/settings/create"  class="btn btn-info">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</a>
 							</div>
@@ -67,7 +67,7 @@
 												</div>
 
 												<div class="col-md-1">
-													<form action="{{ url(LaravelLocalization::setLocale().'/cms/settings'.'/'.$setting->id) }}" method="post" onsubmit="return confirm('Do you really want to submit the form?');"  >
+													<form action="{{ url(LaravelLocalization::setLocale().'/twadm/settings'.'/'.$setting->id) }}" method="post" onsubmit="return confirm('Do you really want to submit the form?');"  >
 														<input type="hidden" name="_method" value="DELETE">
 														<input type="hidden" name="_token" value="{{ csrf_token() }}">
 														<button type="submit" class="btn btn-danger">
@@ -141,7 +141,7 @@
 
 					$.ajax({
 						type: 'PUT',
-						url: '/cms/settings/'+id,
+						url: '/twadm/settings/'+id,
 						dataType: 'json',
 						data: {
 							name: name,

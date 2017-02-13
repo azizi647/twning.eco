@@ -12,7 +12,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="/{{ LaravelLocalization::setLocale() }}/cms"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="/{{ LaravelLocalization::setLocale() }}/cms/roles">Roles</a></li>
+        <li><a href="/{{ LaravelLocalization::setLocale() }}/twadm/roles">Roles</a></li>
         <li class="active">Edit</li>
       </ol>
     </section>
@@ -31,7 +31,7 @@
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-          <form class="form-horizontal" method="Post" action="{{ url(LaravelLocalization::setLocale().'/cms/roles/').'/'.$role->id }}">
+          <form class="form-horizontal" method="Post" action="{{ url(LaravelLocalization::setLocale().'/twadm/roles/').'/'.$role->id }}">
             <div class="box-body">
 
             <div class="flash-message">
@@ -80,7 +80,7 @@
               
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-              <a href="/cms/roles" class="btn btn-default">Cancel</a>
+              <a href="/twadm/roles" class="btn btn-default">Cancel</a>
 
               <button type="submit" class="btn btn-info pull-right">Save</button>
             </div>

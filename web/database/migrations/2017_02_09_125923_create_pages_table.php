@@ -16,8 +16,8 @@ class CreatePagesTable extends Migration
         Schema::create('pages',function(Blueprint $table) {
             $table->increments('id');
             $table->integer('page_id');
-            $table->integer('menupage_id');
-            $table->enum('lang', ['az','ru']);
+            $table->integer('menu_id');
+            $table->enum('lang', ['az','en']);
             $table->string('title');
             $table->text('subtitle');
             $table->text('text');

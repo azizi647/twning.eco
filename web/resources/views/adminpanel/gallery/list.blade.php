@@ -28,7 +28,7 @@
             <div class="box-header">
               <h3 class="box-title">Gallary list</h3>
               <div class="pull-right">
-                  <a href="{{ url('/cms/gallery/create') }}"  class="btn btn-info">
+                  <a href="{{ url('/twadm/gallery/create') }}"  class="btn btn-info">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                   </a>
               </div>
@@ -71,12 +71,12 @@
                   <td>
 
                   <div class="col-md-3">
-                    <a  href="{{ url(LaravelLocalization::setLocale().'/cms/gallery/').'/'.$gallery->gallery_id.'/edit' }}" class="btn btn-default" >
+                    <a  href="{{ url(LaravelLocalization::setLocale().'/twadm/gallery/').'/'.$gallery->gallery_id.'/edit' }}" class="btn btn-default" >
                       <i class="fa fa-pencil" aria-hidden="true"></i>
                     </a>
                   </div>
                   <div class="col-md-2">  
-                      <form action="{{ url(LaravelLocalization::setLocale().'/cms/gallery'.'/'.$gallery->gallery_id) }}" method="post"  onsubmit="return confirm('Do you really want to submit the form?');" >
+                      <form action="{{ url(LaravelLocalization::setLocale().'/twadm/gallery'.'/'.$gallery->gallery_id) }}" method="post"  onsubmit="return confirm('Do you really want to submit the form?');" >
                       
                         <input type="hidden" name="_method" value="DELETE">
 

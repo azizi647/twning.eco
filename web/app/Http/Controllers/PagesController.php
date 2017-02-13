@@ -4,19 +4,32 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use DB;
 
 use App\Page;
 use App\Menu;
+<<<<<<< HEAD
+use Illuminate\Support\Facades\Input;
+use Validator;
+use Redirect;
+use File;
+use LaravelLocalization;
+=======
 
 use Validator;
 use Redirect;
 
+>>>>>>> origin/master
 class PagesController extends Controller {
 
 	public function index()
 	{
 		$pages = Page::lang()->get();
+<<<<<<< HEAD
+		return view('adminpanel.pages.list',['pages'=>$pages]);
+=======
 		return view('adminpanel.pages.list')->with('pages',$pages);
+>>>>>>> origin/master
 	}
 
 	public function create()
@@ -62,6 +75,10 @@ class PagesController extends Controller {
         }
 
 
+<<<<<<< HEAD
+//		dd($request);
+=======
+>>>>>>> origin/master
 		$file            = $request->file('file');
 		$destinationPath = 'public/images/pagegallery';
 //		$extension       = $file->getClientOriginalExtension();
@@ -69,6 +86,14 @@ class PagesController extends Controller {
 //		dd($fileName);
 		$file->move($destinationPath, $fileName);
 
+<<<<<<< HEAD
+        $page_az = new Page([
+			'page_id'    => $pageid,
+			'menu_id'    => $request->get('menu_id'),
+			'title'      => $request->get('title_az'),
+            'link'    	 => str_slug($request->get('title_az')),
+            'keywords'   => str_replace("-",",",str_slug($request->get('title_az'))),
+=======
         $page_az = new Page(array(
 			'page_id'    => $pageid,
 			'menupage_id'=> $request->get('menu_id'),
@@ -76,11 +101,23 @@ class PagesController extends Controller {
 			'title'      => $request->get('title_az'),
             'link'    	 => str_slug($request->get('title_az')),
             'keywords'   => str_slug($request->get('title_az')),
+>>>>>>> origin/master
         	'status'     => $request->get('status'),
         	'show_index' => $request->get('show_index'),
 			'file'       => $fileName,
 			'subtitle'   => $request->get('subtitle_az'),
 			'text'       => $request->get('description_az'),
+<<<<<<< HEAD
+			'lang'       => 'az',
+		]);
+
+        $page_en = new Page(array(
+            'page_id'    => $pageid,
+            'menu_id'    => $request->get('menu_id'),
+			'title'      => $request->get('title_en'),
+            'link'    	 => str_slug($request->get('title_en')),
+			'keywords'   => str_replace("-",",",str_slug($request->get('title_en'))),
+=======
         ));
 
         $page_en = new Page(array(
@@ -90,11 +127,16 @@ class PagesController extends Controller {
 			'title'      => $request->get('title_en'),
             'link'    	 => str_slug($request->get('title_en')),
             'keywords'   => str_slug($request->get('title_en')),
+>>>>>>> origin/master
         	'status'     => $request->get('status'),
         	'show_index' => $request->get('show_index'),
 			'file'       => $fileName,
 			'subtitle'   => $request->get('subtitle_en'),
 			'text'       => $request->get('description_en'),
+<<<<<<< HEAD
+			'lang'       => 'en',
+=======
+>>>>>>> origin/master
         ));
 
 
@@ -107,18 +149,25 @@ class PagesController extends Controller {
 
 	public function edit($id)
 	{
-		$pages = Pages::where('page_id',$id)->get();
-		return view('adminpanel.pages.edit')->with('pages',$pages);
+		$menutypes = Menu::lang()->get();
+		$pages = Page::where('page_id',$id)->get();
+		return view('adminpanel.pages.edit', ['pages'=>$pages,'menutypes'=>$menutypes]);
 	}
 
 	public function update(Request $request, $id)
 	{
 
-		$rules = [            
-            'link'       => 'required',
-            'status'     => 'required',
-            'ordering'   => 'required',
-        ];       
+		$rules = [
+				'status'     	 => 'required',
+				'menu_id'     	 => 'required',
+				'title_az'    	 => 'required',
+				'title_en'    	 => 'required',
+				'subtitle_az' 	 => 'required',
+				'subtitle_en' 	 => 'required',
+				'description_az' => 'required',
+				'description_en' => 'required',
+				'file'           => 'max:10240|mimes:jpeg,png,jpg'
+		];
         
 
         $validator = Validator::make($request->all(), $rules);
@@ -128,43 +177,60 @@ class PagesController extends Controller {
                         ->withErrors($validator)
                         ->withInput();
         }
+		if($request->file('file')) {
+			$destinationPath = 'public/images/pagegallery/';
+			File::delete($destinationPath.$request->get('filename'));
+			$file = $request->file('file');
+			$fileName        = trim($file->getClientOriginalName());
+			$file->move($destinationPath,$fileName);
+		}else{
+			$fileName = $request->get('filename');
+		}
 
-        $page_az =  Pages::where(['page_id' => $id, 'lang' => 'az'])->update([
-			'title'      => $request->get('title_az'),
-            'link'    	 => $request->get('link'),
-        	'status'     => $request->get('status'),
-        	'ordering'   => $request->get('ordering'),
-			'subtitle'   => $request->get('subtitle_az'),
-			'text'       => $request->get('editor_az'),
-        ]); 
-		
-		$page_ru =  Pages::where(['page_id' => $id, 'lang' => 'ru'])->update([
-			'title'      => $request->get('title_ru'),
-            'link'    	 => $request->get('link'),
-        	'status'     => $request->get('status'),
-        	'ordering'   => $request->get('ordering'),
-			'subtitle'   => $request->get('subtitle_ru'),
-			'text'       => $request->get('editor_ru'),
+        Page::where(['page_id' => $id, 'lang' => 'az'])->update([
+				'menu_id'    => $request->get('menu_id'),
+				'title'      => $request->get('title_az'),
+				'link'    	 => str_slug($request->get('title_az')),
+				'keywords'   => str_replace("-",",",str_slug($request->get('title_az'))),
+				'status'     => $request->get('status'),
+				'show_index' => $request->get('show_index'),
+				'file'       => $fileName,
+				'subtitle'   => $request->get('subtitle_az'),
+				'text'       => $request->get('description_az'),
+				'lang'       => 'az',
         ]);
-
-        $page_en =  Pages::where(['page_id' => $id, 'lang' => 'en'])->update([
-			'title'      => $request->get('title_en'),
-            'link'    	 => $request->get('link'),
-        	'status'     => $request->get('status'),
-        	'ordering'   => $request->get('ordering'),
-			'subtitle'   => $request->get('subtitle_en'),
-			'text'       => $request->get('editor_en'),
+        Page::where(['page_id' => $id, 'lang' => 'en'])->update([
+				'menu_id'    => $request->get('menu_id'),
+				'title'      => $request->get('title_en'),
+				'link'    	 => str_slug($request->get('title_en')),
+				'keywords'   => str_replace("-",",",str_slug($request->get('title_en'))),
+				'status'     => $request->get('status'),
+				'show_index' => $request->get('show_index'),
+				'file'       => $fileName,
+				'subtitle'   => $request->get('subtitle_en'),
+				'text'       => $request->get('description_en'),
+				'lang'       => 'en',
         ]);  
 
+<<<<<<< HEAD
+        $request->session()->flash('alert-success', 'Page was successful updated!');
+=======
         $request->session()->flash('alert-success', 'Cv was successful updated!');
+>>>>>>> origin/master
         return Redirect::to('/twadm/pages/'.$id.'/edit');
 	}
 
 	public function destroy($id)
 	{
 
+<<<<<<< HEAD
+		$page = Page::where('page_id', $id)->get();
+		File::delete('public/images/pagegallery/'.$page[0]->file);
+		Page::where('page_id', $id)->delete();
+=======
 		Pages::where('page_id', $id)->delete();
 
+>>>>>>> origin/master
         return Redirect::to('/twadm/pages');
 	}
 

@@ -15,22 +15,9 @@ class CreateTableSettings extends Migration
     {
           Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('post_id');
-            $table->string('logo')->nullable();
-            $table->string('site_name')->nullable();
-            $table->text('meta_key')->nullable();
-            $table->text('meta_descr')->nullable();
-            $table->text('address')->nullable();
-            $table->string('site_email');
-            $table->string('site_phone');
-            $table->string('site_mobile');
-            $table->string('contact_map');
-            $table->string('facebook_url');
-            $table->string('instagram_url');
-            $table->string('twetter_url');
-            $table->string('copyright');
-            $table->enum('lang', ['az','en']);
-            $table->integer('status');
+            $table->string('name');
+            $table->string('value');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

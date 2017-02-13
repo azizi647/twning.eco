@@ -21,7 +21,7 @@
             $.ajaxSetup({
                 beforeSend: function(xhr, settings) {
                     console.log('beforesend');
-                    settings.data += "&_token=<?= csrf_token() ?>";
+                    settings.data += "&_token=<?php echo csrf_token(); ?>";
                 }
             });
 
@@ -41,9 +41,9 @@
            $('.group-select').on('change', function(){
                 var group = $(this).val();
                 if (group) {
-                    window.location.href = '{{ url(LaravelLocalization::setLocale().'/cms/translations/getView') }}/?group='+$(this).val();
+                    window.location.href = ' {{ url('/'.LaravelLocalization::setLocale().'/twadm/translations/getView') }}/?group='+$(this).val();
                 } else {
-                    window.location.href = '{{ url(LaravelLocalization::setLocale().'/cms/translations') }}';
+                    window.location.href = '{{ url('/'.LaravelLocalization::setLocale().'/twadm/translations') }}';
                 }
             });
 
@@ -90,7 +90,7 @@
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/{{ LaravelLocalization::setLocale() }}/cms"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/{{ url(LaravelLocalization::setLocale().'/twadm') }}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Translation</li>
       </ol>
     </section>
@@ -109,7 +109,7 @@
               <p>Done searching for translations, found <strong class="counter">N</strong> items!</p>
           </div>
           <div class="alert alert-success success-publish" style="display:none;">
-              <p>Done publishing the translations for group '<?= $group ?>'!</p>
+              <p>Done publishing the translations for group '<?php echo  $group; ?>'!</p>
           </div>
           <?php if(Session::has('successPublish')) : ?>
           <div class="alert alert-info">
@@ -120,7 +120,7 @@
           <p>
           
            @if( !isset($group))
-          <!--   <form class="form-inline form-import" action="{{ url(LaravelLocalization::setLocale().'/cms/translations/getView') }}"  method="POST" data-remote="true" role="form"> 
+          <!--   <form class="form-inline form-import" action="{{ url(LaravelLocalization::setLocale().'/twadm/translations/getView') }}"  method="POST" data-remote="true" role="form">
               <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
               <select name="replace" class="form-control">
                   <option value="0">Append new translations</option>
@@ -131,13 +131,13 @@
 
             @endif
 
-            <form class="form-inline pull-left form-publish" style="margin-right: 20px" method="POST"  action="{{ url(LaravelLocalization::setLocale().'/cms/translations/export') }}" >
+            <form class="form-inline pull-left form-publish" style="margin-right: 20px" method="POST"  action="{{ url(LaravelLocalization::setLocale().'/twadm/translations/export') }}" >
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                 <input type="hidden" name="group" value="{{ isset($group) ? $group : '*'}}">
                 <button type="submit" class="btn btn-info" data-disable-with="Publishing.." >Export translations</button>
             </form> 
 
-            <form class="form-inline form-publish" method="POST"  action="{{ url(LaravelLocalization::setLocale().'/cms/translations/import') }}" >
+            <form class="form-inline form-publish" method="POST"  action="{{ url(LaravelLocalization::setLocale().'/twadm/translations/import') }}" >
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                 <input type="hidden" name="group" value="{{ isset($group) ? $group : '*'}}">
                 <button type="submit" class="btn btn-info" data-disable-with="Publishing.." >Imports translations</button>
@@ -148,30 +148,29 @@
               <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
               <div class="form-group">
                   <select name="group" id="group" class="form-control group-select">
-                      <option value=""></option>}
-                      option
+                      <option value=""></option>
                       <?php foreach($groups as $key => $value): ?>
-                      <option value="<?= $key ?>"<?= $key == $group ? ' selected':'' ?>><?= $value ?></option>
+                      <option value="<?php echo $key; ?>" <?php echo $key == $group ? ' selected' : ''; ?> > <?php echo $value; ?> </option>
                       <?php endforeach; ?>
                   </select>
               </div>
           </form>
           <?php if($group): ?>
     
-          <form  method="POST" action="{{ url(LaravelLocalization::setLocale().'/cms/translations/postAdd')}}"  role="form">
+          <form  method="POST" action="{{ url(LaravelLocalization::setLocale().'/twadm/translations/postAdd')}}"  role="form">
               <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
               <input type="hidden" name="group" value="{{ $group }}">
               <textarea class="form-control" rows="3" name="keys" placeholder="Add 1 key per line, without the group prefix"></textarea>
               <input type="submit" value="Add keys" class="btn btn-primary">
           </form>
 
-          <h4>Total: <?= $numTranslations ?>, changed: <?= $numChanged ?></h4>
+          <h4>Total: <?php echo  $numTranslations; ?>, changed: <?php echo  $numChanged; ?></h4>
           <table class="table">
               <thead>
               <tr>
                   <th width="15%">Key</th>
                   <?php foreach($locales as $locale): ?>
-                  <th><?= $locale ?></th>
+                  <th><?php echo  $locale ?></th>
                   <?php endforeach; ?>
                   <?php if($deleteEnabled): ?>
                   <th>&nbsp;</th>
@@ -181,18 +180,18 @@
               <tbody>
 
               <?php foreach($translations as $key => $translation): ?>
-              <tr id="<?= $key ?>">
-                  <td><?= $key ?></td>
+              <tr id="<?php echo  $key; ?>">
+                  <td><?php echo  $key; ?></td>
                   <?php foreach($locales as $locale): ?>
                   <?php $t = isset($translation[$locale]) ? $translation[$locale] : null?>
 
                   <td>
-                      <a href="#edit" class="editable status-<?= $t ? $t->status : 0 ?> locale-<?= $locale ?>" data-locale="<?= $locale ?>" data-name="<?= $locale . "|" . $key ?>" id="username" data-type="textarea" data-pk="<?= $t ? $t->id : 0 ?>" data-url="<?= $editUrl ?>" data-title="Enter translation"><?= $t ? htmlentities($t->value, ENT_QUOTES, 'UTF-8', false) : '' ?></a>
+                      <a href="#edit" class="editable status-<?php echo  $t ? $t->status : 0; ?> locale-<?php echo  $locale; ?>" data-locale="<?php echo  $locale ?>" data-name="<?php echo  $locale . "|" . $key; ?>" id="username" data-type="textarea" data-pk="<?php echo  $t ? $t->id : 0; ?>" data-url="<?php echo  $editUrl; ?>" data-title="Enter translation"><?php echo  $t ? htmlentities($t->value, ENT_QUOTES, 'UTF-8', false) : ''; ?></a>
                   </td>
                   <?php endforeach; ?>
                   <?php if($deleteEnabled): ?>
                   <td>
-                      <a href="{{ url(LaravelLocalization::setLocale().'/cms/translations/postDelete')}}" delete-key={{ $key  }} delete-group={{ $group }} class="delete-key" data-confirm="Are you sure you want to delete the translations for '<?= $key ?>?"><span class="glyphicon glyphicon-trash"></span></a>
+                      <a href="{{ url(LaravelLocalization::setLocale().'/twadm/translations/postDelete')}}" delete-key={{ $key  }} delete-group={{ $group }} class="delete-key" data-confirm="Are you sure you want to delete the translations for '<?php echo  $key ?>?"><span class="glyphicon glyphicon-trash"></span></a>
                   </td>
                   <?php endif; ?>
               </tr>

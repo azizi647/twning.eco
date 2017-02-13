@@ -7,7 +7,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>T</b>W</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Twinnig</b>.Eco.Gov.Az</span>
+      <span class="logo-lg"><b>Twinning </b> WebDev</span>
     </a>
 
     <!-- Header Navbar -->

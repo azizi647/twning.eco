@@ -17,7 +17,11 @@ Route::group(
     {
     
     
-    
+     Route::get('/', 'FrontendController@index');
+     Route::get('/about.html', 'FrontendController@about');
+     Route::get('/team.html', 'FrontendController@team');
+     Route::get('/contact.html', 'FrontendController@contact');
+     Route::get('/pages.html', 'FrontendController@pages');
     
     
 
@@ -28,10 +32,11 @@ Route::group(
              * First Level Admin Modules
             **/
 
-            Route::resource('users', 'UsersController');
-            Route::resource('menus', 'MenusController');
-            Route::resource('pages', 'PagesController');
+            Route::resource('users',    'UsersController');
+            Route::resource('menus',    'MenusController');
+            Route::resource('pages',    'PagesController');
             Route::resource('partners', 'PartnersController');
+            Route::resource('settings', 'SettingsController');
 
             /** ******* Translation ******* **/
             Route::get('translations', 'TranslationsController@index');
@@ -52,6 +57,6 @@ Route::group(
         Route::post('twadm/login', '\App\Http\Controllers\Auth\LoginController@login');
         Route::get('twadm/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-        Route::get('/', 'FrontendController@index');
+       
 
     });

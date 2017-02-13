@@ -62,6 +62,7 @@ class MenusController extends Controller {
         } else {        	
             $menuid++;
         }
+//		dd($request);
         // return Input::all();
         $menu_az = new Menu([
 			'menu_id'     => $menuid,

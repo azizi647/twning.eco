@@ -14,7 +14,7 @@
     </h1>
     <ol class="breadcrumb">
       <li><a href="/{{ LaravelLocalization::setLocale() }}/cms"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a href="/{{ LaravelLocalization::setLocale() }}/cms/gallery">Gallery</a></li>
+      <li><a href="/{{ LaravelLocalization::setLocale() }}/twadm/gallery">Gallery</a></li>
       <li class="active">Edit</li>
     </ol>
   </section>
@@ -33,7 +33,7 @@
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-          <form class="form-horizontal" action="{{ url(LaravelLocalization::setLocale().'/cms/gallery/').'/'.$galleries[0]->gallery_id }}" method="Post" enctype="multipart/form-data">
+          <form class="form-horizontal" action="{{ url(LaravelLocalization::setLocale().'/twadm/gallery/').'/'.$galleries[0]->gallery_id }}" method="Post" enctype="multipart/form-data">
             <div class="box-body">
 
               <div><!-- error olanda  -->
@@ -141,7 +141,7 @@
                 <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                <a href="/cms/gallery" class="btn btn-default">Cancel</a>
+                <a href="/twadm/gallery" class="btn btn-default">Cancel</a>
                 <button type="submit" class="btn btn-info pull-right">Save</button>
               </div>
               <!-- /.box-footer -->
