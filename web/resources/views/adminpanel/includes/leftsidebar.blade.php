@@ -64,7 +64,6 @@
         <a href="#"><i class="fa fa-cogs"></i> <span>{{ trans('cms_words.settings') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li><a href="{{ url('/twadm/settings') }}"><i class="fa fa-laptop"></i> {{ trans('cms_words.site_settings') }}</a></li>
-          <li><a href="#"><i class="fa fa-edit"></i> {{ trans('cms_words.email_settings') }}</a></li>
           <li><a href="{{ url('/twadm/cleancache') }}"><i class="fa fa-edit"></i> Clean Cache</a></li>
 
         </ul>

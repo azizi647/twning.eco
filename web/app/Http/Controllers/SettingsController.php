@@ -9,7 +9,7 @@ use App\Setting;
 
 use Validator;
 
-class CmsSettingsController extends Controller {
+class SettingsController extends Controller {
 
 	protected $request;
 	
@@ -41,7 +41,7 @@ class CmsSettingsController extends Controller {
 		$validator = Validator::make($this->request->all(), $rules);
 
         if ($validator->fails()) {
-            return redirect('cms/settings/create')
+            return redirect('twadm/settings/create')
                         ->withErrors($validator)
                         ->withInput();
         }
@@ -55,7 +55,7 @@ class CmsSettingsController extends Controller {
 
         $this->request->session()->flash('alert-success', 'Setting was successful added!');
 
-        return redirect('cms/settings/create');
+        return redirect('twadm/settings/create');
 	}
 
 	public function update($id)
@@ -64,8 +64,9 @@ class CmsSettingsController extends Controller {
 		Setting::find($id)->update([
 			'value' => $this->request->get('value'),
         ]);
-
-        return 1;
+//		return $this->request;
+		$settings = Setting::all();
+		return view('adminpanel.settings.list')->with('settings',$settings);
 	}
 
 	
@@ -75,7 +76,7 @@ class CmsSettingsController extends Controller {
 
         $this->request->session()->flash('alert-success', 'Setting was successful deleted!');
 
-		return redirect('cms/settings');
+		return redirect('twadm/settings');
 	}
 
 }

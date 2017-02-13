@@ -11,7 +11,7 @@
 			<small></small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="/{{ LaravelLocalization::setLocale() }}/twadm/settings"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li><a href="/{{ url(LaravelLocalization::setLocale().'/twadm/settings') }}"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">Settings</li>
 		</ol>
 
@@ -25,7 +25,7 @@
 						<div class="box-header">
 							<h3 class="box-title">All Settings</h3>
 							<div class="pull-right">
-								<a href="/twadm/settings/create"  class="btn btn-info">
+								<a href="{{url('/twadm/settings/create')}}"  class="btn btn-info">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</a>
 							</div>
@@ -113,7 +113,7 @@
 			var name;
 			var value;
 
-			var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+			var CSRF_TOKEN = $('meta[name="csrf-token]').attr('content');
 
 
 	$(function () {
@@ -141,12 +141,12 @@
 
 					$.ajax({
 						type: 'PUT',
-						url: '/twadm/settings/'+id,
+						url: '{{ url("/twadm/settings") }}'+'/'+id,
 						dataType: 'json',
 						data: {
 							name: name,
 							value: value,
-							_token: CSRF_TOKEN
+							_token: '{{ csrf_token() }}'
 						},
 						cache: false,
 						// beforeSend: function(result) {

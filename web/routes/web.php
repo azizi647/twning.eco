@@ -17,11 +17,7 @@ Route::group(
     {
     
     
-     Route::get('/', 'FrontendController@index');
-     Route::get('/about.html', 'FrontendController@about');
-     Route::get('/team.html', 'FrontendController@team');
-     Route::get('/contact.html', 'FrontendController@contact');
-     Route::get('/pages.html', 'FrontendController@pages');
+    
     
     
 
@@ -57,6 +53,6 @@ Route::group(
         Route::post('twadm/login', '\App\Http\Controllers\Auth\LoginController@login');
         Route::get('twadm/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-       
+        Route::get('/', 'FrontendController@index');
 
     });

@@ -11,8 +11,8 @@
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/{{ LaravelLocalization::setLocale() }}/cms"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="/{{ LaravelLocalization::setLocale() }}/twadm/settings"></i>Setting</a></li>
+        <li><a href="/{{ url(LaravelLocalization::setLocale().'/twadm') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/{{ url(LaravelLocalization::setLocale().'/twadm/settings') }}"></i>Setting</a></li>
         <li class="active">Create</li>
       </ol>
     </section>

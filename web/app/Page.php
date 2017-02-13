@@ -15,14 +15,7 @@ class Page extends Model
 
     public function scopeLang($query)
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
+        /*--*/
         return $query->where('pages.lang', Lang::getLocale());
-=======
-        return $query->where('lang', Lang::getLocale());
->>>>>>> origin/master
-=======
-        return $query->where('lang', Lang::getLocale());
->>>>>>> origin/master
     }
 }

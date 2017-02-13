@@ -143,12 +143,14 @@
                   <hr />
                   <label for="InputImg" class="col-sm-2 control-label">Image</label>
                   <div class="col-sm-10">
-
                       <input type="hidden" name="filename" value="{{ $pages[0]->file }}">
+                      @if($pages[0]->file != "000")
                       <a href="{{ asset('public/images/pagegallery/'.$pages[0]->file ) }}" data-lightbox="image-{{ $pages[0]->menu_id}}">
                           <img src="{{ asset('public/images/pagegallery/'.$pages[0]->file )}}" class="img-responsive img-thumbnail" style="height: 100px" alt="">
                       </a>
-
+                      @else
+                      No Photo
+                      @endif
                   </div>
               </div>
               <hr />

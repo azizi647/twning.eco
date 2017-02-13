@@ -4,14 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Lang;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
-=======
-
->>>>>>> origin/master
 
 class Partner extends Model
 {
@@ -23,6 +15,7 @@ class Partner extends Model
 
     public function scopeLang($query)
     {
+        /*---*/
         return $query->where('lang', Lang::getLocale());
     }
 }

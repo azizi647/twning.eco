@@ -8,28 +8,17 @@ use DB;
 
 use App\Page;
 use App\Menu;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Input;
 use Validator;
 use Redirect;
 use File;
 use LaravelLocalization;
-=======
-
-use Validator;
-use Redirect;
-
->>>>>>> origin/master
 class PagesController extends Controller {
 
 	public function index()
 	{
 		$pages = Page::lang()->get();
-<<<<<<< HEAD
 		return view('adminpanel.pages.list',['pages'=>$pages]);
-=======
-		return view('adminpanel.pages.list')->with('pages',$pages);
->>>>>>> origin/master
 	}
 
 	public function create()
@@ -50,10 +39,10 @@ class PagesController extends Controller {
 				'subtitle_en' 	 => 'required',
 				'description_az' => 'required',
 				'description_en' => 'required',
-				'file'           => 'required|max:10240|mimes:jpeg,png,jpg'
-        ];       
-        
-
+        ];
+		if($request->file('file')) {
+			$rules['file'] = 'required|max:10240|mimes:jpeg,png,jpg';
+		}
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
@@ -75,39 +64,30 @@ class PagesController extends Controller {
         }
 
 
-<<<<<<< HEAD
 //		dd($request);
-=======
->>>>>>> origin/master
-		$file            = $request->file('file');
-		$destinationPath = 'public/images/pagegallery';
-//		$extension       = $file->getClientOriginalExtension();
-		$fileName        = trim($file->getClientOriginalName());
-//		dd($fileName);
-		$file->move($destinationPath, $fileName);
+		if($request->file('file')){
+			$file            = $request->file('file');
 
-<<<<<<< HEAD
+			$destinationPath = 'public/images/pagegallery';
+	//		$extension       = $file->getClientOriginalExtension();
+			$fileName        = trim($file->getClientOriginalName());
+	//		dd($fileName);
+			$file->move($destinationPath, $fileName);
+		}else{
+			$fileName = '000';
+		}
+
         $page_az = new Page([
 			'page_id'    => $pageid,
 			'menu_id'    => $request->get('menu_id'),
 			'title'      => $request->get('title_az'),
             'link'    	 => str_slug($request->get('title_az')),
             'keywords'   => str_replace("-",",",str_slug($request->get('title_az'))),
-=======
-        $page_az = new Page(array(
-			'page_id'    => $pageid,
-			'menupage_id'=> $request->get('menu_id'),
-			'lang'       => 'az',
-			'title'      => $request->get('title_az'),
-            'link'    	 => str_slug($request->get('title_az')),
-            'keywords'   => str_slug($request->get('title_az')),
->>>>>>> origin/master
         	'status'     => $request->get('status'),
         	'show_index' => $request->get('show_index'),
 			'file'       => $fileName,
 			'subtitle'   => $request->get('subtitle_az'),
 			'text'       => $request->get('description_az'),
-<<<<<<< HEAD
 			'lang'       => 'az',
 		]);
 
@@ -117,26 +97,12 @@ class PagesController extends Controller {
 			'title'      => $request->get('title_en'),
             'link'    	 => str_slug($request->get('title_en')),
 			'keywords'   => str_replace("-",",",str_slug($request->get('title_en'))),
-=======
-        ));
-
-        $page_en = new Page(array(
-            'page_id'    => $pageid,
-            'menupage_id'=> $request->get('menu_id'),
-			'lang'       => 'en',
-			'title'      => $request->get('title_en'),
-            'link'    	 => str_slug($request->get('title_en')),
-            'keywords'   => str_slug($request->get('title_en')),
->>>>>>> origin/master
         	'status'     => $request->get('status'),
         	'show_index' => $request->get('show_index'),
 			'file'       => $fileName,
 			'subtitle'   => $request->get('subtitle_en'),
 			'text'       => $request->get('description_en'),
-<<<<<<< HEAD
 			'lang'       => 'en',
-=======
->>>>>>> origin/master
         ));
 
 
@@ -166,9 +132,11 @@ class PagesController extends Controller {
 				'subtitle_en' 	 => 'required',
 				'description_az' => 'required',
 				'description_en' => 'required',
-				'file'           => 'max:10240|mimes:jpeg,png,jpg'
 		];
-        
+
+		if($request->file('file')) {
+			$rules['file'] = 'required|max:10240|mimes:jpeg,png,jpg';
+		}
 
         $validator = Validator::make($request->all(), $rules);
 
@@ -179,7 +147,9 @@ class PagesController extends Controller {
         }
 		if($request->file('file')) {
 			$destinationPath = 'public/images/pagegallery/';
-			File::delete($destinationPath.$request->get('filename'));
+			if($request->get('filename') != "000"){
+				File::delete($destinationPath.$request->get('filename'));
+			}
 			$file = $request->file('file');
 			$fileName        = trim($file->getClientOriginalName());
 			$file->move($destinationPath,$fileName);
@@ -212,25 +182,16 @@ class PagesController extends Controller {
 				'lang'       => 'en',
         ]);  
 
-<<<<<<< HEAD
         $request->session()->flash('alert-success', 'Page was successful updated!');
-=======
-        $request->session()->flash('alert-success', 'Cv was successful updated!');
->>>>>>> origin/master
         return Redirect::to('/twadm/pages/'.$id.'/edit');
 	}
 
 	public function destroy($id)
 	{
 
-<<<<<<< HEAD
 		$page = Page::where('page_id', $id)->get();
 		File::delete('public/images/pagegallery/'.$page[0]->file);
 		Page::where('page_id', $id)->delete();
-=======
-		Pages::where('page_id', $id)->delete();
-
->>>>>>> origin/master
         return Redirect::to('/twadm/pages');
 	}
 

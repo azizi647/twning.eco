@@ -15,6 +15,7 @@ class Menu extends Model
 
     public function scopeLang($query)
     {
+        /*--*/
         return $query->where('menus.lang', Lang::getLocale());
     }
 }
