@@ -5,6 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Lang;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 =======
 
 >>>>>>> origin/master
